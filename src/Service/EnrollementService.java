@@ -59,9 +59,16 @@ public class EnrollementService {
     }
 
 
-    public void gradeAssignment(Long enrollmentId, int assignmentIndex, int marks) {
+    public void gradeAssignment(Long enrollmentId, Long instructorId, int assignmentIndex, int marks) {
         for (Enrollement e : repo.enrollments) {
             if (e.getId().equals(enrollmentId)) {
+
+             
+                if (!e.getCourse().getInstructor().getId().equals(instructorId)) {
+                    System.out.println("Only the assigned instructor can grade this course!");
+                    return;
+                }
+
                 List<Assignment> list = e.getAssignments();
                 if (assignmentIndex < 1 || assignmentIndex > list.size()) {
                     System.out.println("Invalid assignment number.");
@@ -69,7 +76,6 @@ public class EnrollementService {
                 }
                 list.get(assignmentIndex - 1).setMarks(marks);
                 System.out.println("Assignment graded: " + list.get(assignmentIndex - 1).getTitle());
-
 
                 if (e.allAssignmentsCompletedAndGraded() && e.getCertificate() == null) {
                     e.setCertificate(new Certification(e.getId(),
@@ -82,9 +88,11 @@ public class EnrollementService {
         System.out.println("Enrollment not found!");
     }
 
+
     public void viewEnrollments() {
         for (Enrollement e : repo.enrollments) {
             System.out.println(e);
         }
     }
 }
+

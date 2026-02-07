@@ -104,11 +104,13 @@ import java.util.Scanner;//TIP To <b>Run</b> code, press <shortcut actionId="Run
                         case 8:
                             System.out.print("Enrollment ID: ");
                             Long gradeEid = sc.nextLong();
+                            System.out.print("Instructor ID: ");
+                            Long instrid = sc.nextLong();
                             System.out.print("Assignment Number to grade: ");
                             int gradeIndex = sc.nextInt();
                             System.out.print("Marks: ");
                             int marks = sc.nextInt();
-                            enrollmentService.gradeAssignment(gradeEid, gradeIndex, marks);
+                            enrollmentService.gradeAssignment(gradeEid,instrid, gradeIndex, marks);
                             break;
 
                         case 9:
